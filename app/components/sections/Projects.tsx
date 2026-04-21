@@ -13,7 +13,7 @@ export default function Projects() {
   const { t, lang } = useLang();
 
   return (
-    <section id="projects" style={{ maxWidth: "1100px", margin: "0 auto", padding: "100px 2rem" }}>
+    <section id="projects" className="projects-section" style={{ maxWidth: "1100px", margin: "0 auto", padding: "100px 2rem" }}>
       <motion.div
         ref={titleRef}
         initial={{ opacity: 0, y: 20 }}
@@ -44,7 +44,7 @@ export default function Projects() {
         </Link>
       </motion.div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: "1rem" }}>
+      <div className="projects-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: "1rem" }}>
         {featuredProjects.map((project, i) => (
           <ProjectCard
             key={project.id}

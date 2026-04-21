@@ -171,9 +171,21 @@ export default function SkillsPage() {
   return (
     <>
       <Navbar />
-      <main style={{ minHeight: "100vh", paddingTop: "100px", paddingBottom: "100px", position: "relative" }}>
+      <style>{`
+        .skills-page-main { padding-top: 100px; padding-bottom: 100px; }
+        .skills-page-inner { max-width: 1100px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
+        .skills-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+        .skills-groups-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+        @media (max-width: 700px) {
+          .skills-page-main { padding-top: 80px; padding-bottom: 60px; }
+          .skills-page-inner { padding: 0 1rem; }
+          .skills-stats-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+          .skills-groups-grid { grid-template-columns: 1fr; gap: 1rem; }
+        }
+      `}</style>
+      <main className="skills-page-main" style={{ minHeight: "100vh", position: "relative" }}>
         <SkillsBackground />
-        <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "0 2rem", position: "relative", zIndex: 1 }}>
+        <div className="skills-page-inner">
 
           {/* Header */}
           <motion.div
@@ -200,9 +212,7 @@ export default function SkillsPage() {
             </h1>
 
             {/* Stats row */}
-            <div style={{
-              display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "1rem",
-            }}>
+            <div className="skills-stats-grid">
               {[
                 { value: String(totalSkills), label: lang === "fr" ? "Technologies" : "Technologies" },
                 { value: String(skillGroups.length), label: lang === "fr" ? "Domaines" : "Domains" },
@@ -267,11 +277,7 @@ export default function SkillsPage() {
           </motion.div>
 
           {/* Skills grid */}
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(2, 1fr)",
-            gap: "1.25rem",
-          }}>
+          <div className="skills-groups-grid">
             {skillGroups.map((group, i) => (
               <GroupCard
                 key={group.id}

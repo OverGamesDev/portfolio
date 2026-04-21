@@ -16,9 +16,9 @@ export default function ProjectsPage() {
   return (
     <>
       <Navbar />
-      <main style={{ minHeight: "100vh", paddingTop: "100px", paddingBottom: "80px", position: "relative" }}>
+      <main className="projects-page-main" style={{ minHeight: "100vh", paddingTop: "100px", paddingBottom: "80px", position: "relative" }}>
         <HexBackground />
-        <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "0 2rem", position: "relative", zIndex: 1 }}>
+        <div className="projects-page-inner" style={{ maxWidth: "1100px", margin: "0 auto", padding: "0 2rem", position: "relative", zIndex: 1 }}>
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -47,7 +47,7 @@ export default function ProjectsPage() {
           </motion.div>
 
           {/* Grid */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: "1rem" }}>
+          <div className="projects-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: "1rem" }}>
             {projects.map((project, i) => (
               <ProjectCard
                 key={project.id}

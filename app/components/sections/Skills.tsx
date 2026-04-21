@@ -114,7 +114,7 @@ export default function Skills() {
   const { t, lang } = useLang();
 
   return (
-    <section id="skills" style={{ borderTop: "1px solid var(--border)", padding: "100px 2rem" }}>
+    <section id="skills" style={{ borderTop: "1px solid var(--border)" }} className="skills-section">
       <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
         {/* Title row */}
         <motion.div
@@ -148,15 +148,28 @@ export default function Skills() {
         </motion.div>
 
         {/* Preview grid */}
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
-          gap: "1rem",
-        }}>
+        <div className="skills-preview-grid">
           {skillGroups.slice(0, 6).map((g, i) => (
             <SkillPreviewCard key={g.id} group={g} index={i} lang={lang} />
           ))}
         </div>
+        <style>{`
+          .skills-section { padding: 100px 2rem; }
+          @media (max-width: 600px) {
+            .skills-section { padding: 60px 1rem; }
+          }
+          .skills-preview-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+          }
+          @media (max-width: 900px) {
+            .skills-preview-grid { grid-template-columns: repeat(2, 1fr); }
+          }
+          @media (max-width: 600px) {
+            .skills-preview-grid { grid-template-columns: 1fr; }
+          }
+        `}</style>
       </div>
     </section>
   );

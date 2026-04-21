@@ -35,9 +35,9 @@ export default function ProjectPage({ params }: { params: Promise<{ slug: string
   return (
     <>
       <Navbar />
-      <main style={{ minHeight: "100vh", paddingTop: "80px" }}>
+      <main style={{ minHeight: "100vh", paddingTop: "80px", overflowX: "hidden" }}>
         {/* Hero header with optional banner as background */}
-        <div style={{
+        <div className="project-hero-section" style={{
           position: "relative", overflow: "hidden",
           background: project.banner ? "transparent" : "var(--surface)",
           borderBottom: "1px solid var(--border)",
@@ -45,6 +45,11 @@ export default function ProjectPage({ params }: { params: Promise<{ slug: string
           minHeight: project.banner ? "280px" : undefined,
           display: "flex", flexDirection: "column", justifyContent: "flex-end",
         }}>
+        <style>{`
+          @media (max-width: 640px) {
+            .project-hero-section { padding: 3rem 1rem !important; }
+          }
+        `}</style>
           {/* Banner background */}
           {project.banner && (
             <>
@@ -73,14 +78,42 @@ export default function ProjectPage({ params }: { params: Promise<{ slug: string
           <div style={{ maxWidth: "1100px", margin: "0 auto", position: "relative", zIndex: 2, width: "100%" }}>
             <Link
               href="/projects"
-              style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", fontSize: "0.78rem", color: "var(--text-2)", textDecoration: "none", marginBottom: "2.5rem", transition: "color 0.2s" }}
-              onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "var(--text)")}
-              onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "var(--text-2)")}
+              style={{
+                display: "inline-flex", alignItems: "center", gap: "0.5rem",
+                fontSize: "0.78rem", fontWeight: 600,
+                color: "var(--text-2)",
+                textDecoration: "none",
+                marginBottom: "2.5rem",
+                padding: "0.45rem 0.9rem",
+                borderRadius: "8px",
+                border: "1px solid var(--border)",
+                background: "rgba(255,255,255,0.04)",
+                backdropFilter: "blur(6px)",
+                transition: "all 0.18s",
+              }}
+              onMouseEnter={(e) => {
+                const el = e.currentTarget as HTMLElement;
+                el.style.color = "var(--text)";
+                el.style.borderColor = "var(--border-2)";
+                el.style.background = "rgba(255,255,255,0.08)";
+              }}
+              onMouseLeave={(e) => {
+                const el = e.currentTarget as HTMLElement;
+                el.style.color = "var(--text-2)";
+                el.style.borderColor = "var(--border)";
+                el.style.background = "rgba(255,255,255,0.04)";
+              }}
             >
               {t.projects.back}
             </Link>
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr auto", gap: "3rem", alignItems: "center" }}>
+            <div className="project-hero-header" style={{ display: "grid", gridTemplateColumns: "1fr auto", gap: "3rem", alignItems: "center" }}>
+            <style>{`
+              @media (max-width: 640px) {
+                .project-hero-header { grid-template-columns: 1fr !important; gap: 0 !important; }
+                .project-hero-3d { display: none !important; }
+              }
+            `}</style>
               <div>
                 <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1.2rem" }}>
                   <div style={{
@@ -147,7 +180,7 @@ export default function ProjectPage({ params }: { params: Promise<{ slug: string
               </div>
 
               {/* 3D visual */}
-              <div style={{ width: "200px", height: "200px", flexShrink: 0 }}>
+              <div className="project-hero-3d" style={{ width: "200px", height: "200px", flexShrink: 0 }}>
                 <ContactScene />
               </div>
             </div>
@@ -155,7 +188,54 @@ export default function ProjectPage({ params }: { params: Promise<{ slug: string
         </div>
 
         {/* Content */}
-        <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "4rem 2rem", display: "grid", gridTemplateColumns: "1fr 340px", gap: "4rem" }}>
+        <style>{`
+          .project-detail-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 3rem;
+          }
+          @media (max-width: 860px) {
+            .project-detail-content {
+              grid-template-columns: 1fr;
+              padding: 2rem 1rem;
+              gap: 2rem;
+            }
+            .project-sidebar-sticky {
+              position: static !important;
+              top: unset !important;
+            }
+            .project-sidebar-grid {
+              display: grid !important;
+              grid-template-columns: 1fr 1fr;
+              gap: 1rem;
+            }
+          }
+          @media (max-width: 520px) {
+            .project-sidebar-grid {
+              grid-template-columns: 1fr !important;
+            }
+          }
+          .project-iframe-wrapper {
+            width: 100%;
+            overflow: hidden;
+          }
+          .project-iframe-wrapper iframe {
+            width: 100%;
+            max-width: 100%;
+            height: 500px;
+            border: none;
+            display: block;
+          }
+          @media (max-width: 640px) {
+            .project-iframe-wrapper iframe {
+              height: 320px;
+            }
+          }
+        `}</style>
+        <div className="project-detail-content">
           {/* Main */}
           <div>
             {/* Overview */}
@@ -239,13 +319,14 @@ export default function ProjectPage({ params }: { params: Promise<{ slug: string
                       ↗
                     </a>
                   </div>
-                  <iframe
-                    src={project.site}
-                    style={{ width: "100%", height: "500px", border: "none", display: "block" }}
-                    loading="lazy"
-                    sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
-                    title={`${project.name} website`}
-                  />
+                  <div className="project-iframe-wrapper">
+                    <iframe
+                      src={project.site}
+                      loading="lazy"
+                      sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+                      title={`${project.name} website`}
+                    />
+                  </div>
                 </div>
               </motion.section>
             )}
@@ -256,8 +337,10 @@ export default function ProjectPage({ params }: { params: Promise<{ slug: string
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.15 }}
-            style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}
+            className="project-sidebar-sticky"
+            style={{ display: "contents" }}
           >
+          <div className="project-sidebar-grid" style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
             {/* Tech Stack */}
             <div style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "10px", padding: "1.5rem" }}>
               <h3 style={{ fontSize: "0.72rem", textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--text-3)", fontWeight: 600, marginBottom: "1.25rem" }}>
@@ -313,11 +396,32 @@ export default function ProjectPage({ params }: { params: Promise<{ slug: string
               </div>
               <Link
                 href="/projects"
-                style={{ display: "block", marginTop: "1.25rem", fontSize: "0.75rem", color: "var(--accent)", textDecoration: "none" }}
+                style={{
+                  display: "flex", alignItems: "center", justifyContent: "center", gap: "0.4rem",
+                  marginTop: "1.25rem", fontSize: "0.75rem", fontWeight: 600,
+                  color: "var(--text-2)", textDecoration: "none",
+                  padding: "0.5rem 1rem", borderRadius: "8px",
+                  border: "1px solid var(--border)",
+                  background: "rgba(255,255,255,0.03)",
+                  transition: "all 0.18s",
+                }}
+                onMouseEnter={(e) => {
+                  const el = e.currentTarget as HTMLElement;
+                  el.style.color = "var(--text)";
+                  el.style.borderColor = "var(--border-2)";
+                  el.style.background = "rgba(255,255,255,0.07)";
+                }}
+                onMouseLeave={(e) => {
+                  const el = e.currentTarget as HTMLElement;
+                  el.style.color = "var(--text-2)";
+                  el.style.borderColor = "var(--border)";
+                  el.style.background = "rgba(255,255,255,0.03)";
+                }}
               >
-                {lang === "fr" ? "Voir tous →" : "View all →"}
+                {lang === "fr" ? "← Tous les projets" : "← All projects"}
               </Link>
             </div>
+          </div>
           </motion.aside>
         </div>
       </main>
