@@ -2,10 +2,13 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { projects } from "@/lib/projects";
 import { useLang } from "@/lib/useLang";
 import ProjectCard from "@/components/ui/ProjectCard";
 import Navbar from "@/components/ui/Navbar";
+
+const HexBackground = dynamic(() => import("@/components/three/HexBackground"), { ssr: false });
 
 export default function ProjectsPage() {
   const { t, lang } = useLang();
@@ -13,8 +16,9 @@ export default function ProjectsPage() {
   return (
     <>
       <Navbar />
-      <main style={{ minHeight: "100vh", paddingTop: "100px", paddingBottom: "80px" }}>
-        <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "0 2rem" }}>
+      <main style={{ minHeight: "100vh", paddingTop: "100px", paddingBottom: "80px", position: "relative" }}>
+        <HexBackground />
+        <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "0 2rem", position: "relative", zIndex: 1 }}>
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}

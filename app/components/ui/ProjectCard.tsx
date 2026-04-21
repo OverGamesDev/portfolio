@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback } from "react";
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -28,56 +28,112 @@ export default function ProjectCard({
   lang: Lang;
 }) {
   const [hovered, setHovered] = useState(false);
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const [glowPos, setGlowPos] = useState({ x: 50, y: 50 });
+  const cardRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef(null);
+  const inView = useInView(scrollRef, { once: true, margin: "-60px" });
+
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = cardRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const cx = rect.width / 2;
+    const cy = rect.height / 2;
+    setTilt({
+      x: ((y - cy) / cy) * -7,
+      y: ((x - cx) / cx) * 7,
+    });
+    setGlowPos({
+      x: (x / rect.width) * 100,
+      y: (y / rect.height) * 100,
+    });
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    setHovered(false);
+    setTilt({ x: 0, y: 0 });
+  }, []);
 
   return (
     <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 40 }}
+      ref={scrollRef}
+      initial={{ opacity: 0, y: 48 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: index * 0.08, ease: "easeOut" }}
+      transition={{ duration: 0.65, delay: index * 0.09, ease: "easeOut" }}
+      style={{ perspective: "800px" }}
     >
       <Link
         href={`/projects/${project.id}`}
         style={{ textDecoration: "none", display: "block" }}
         onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
+        onMouseLeave={handleMouseLeave}
       >
-        <div
+        <motion.div
+          ref={cardRef}
+          onMouseMove={handleMouseMove}
+          animate={{
+            rotateX: tilt.x,
+            rotateY: tilt.y,
+            scale: hovered ? 1.02 : 1,
+          }}
+          transition={{ type: "spring", stiffness: 300, damping: 25 }}
           style={{
             position: "relative",
             background: hovered ? "var(--surface-2)" : "var(--surface)",
-            border: `1px solid ${hovered ? "var(--border-2)" : "var(--border)"}`,
+            border: `1px solid ${hovered ? project.accent + "55" : "var(--border)"}`,
             borderRadius: "12px",
             padding: "1.75rem",
-            transition: "all 0.22s ease",
             overflow: "hidden",
             display: "flex",
             flexDirection: "column",
             cursor: "pointer",
             height: "100%",
+            transformStyle: "preserve-3d",
+            boxShadow: hovered
+              ? `0 20px 60px rgba(0,0,0,0.4), 0 0 40px ${project.accent}18`
+              : "0 4px 20px rgba(0,0,0,0.2)",
+            transition: "background 0.22s, border-color 0.22s, box-shadow 0.22s",
           }}
         >
+          {/* Mouse-following gradient glow */}
+          <div
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              inset: 0,
+              borderRadius: "12px",
+              opacity: hovered ? 1 : 0,
+              transition: "opacity 0.3s",
+              background: `radial-gradient(circle at ${glowPos.x}% ${glowPos.y}%, ${project.accent}18 0%, transparent 65%)`,
+              pointerEvents: "none",
+            }}
+          />
+
           {/* Top accent line on hover */}
           <div style={{
-            position: "absolute", top: 0, left: 0, right: 0, height: "1px",
+            position: "absolute", top: 0, left: 0, right: 0, height: "2px",
             background: hovered
-              ? `linear-gradient(90deg, transparent, ${project.accent}70, transparent)`
+              ? `linear-gradient(90deg, transparent, ${project.accent}90, transparent)`
               : "transparent",
             transition: "background 0.3s",
           }} />
 
           {/* Header */}
           <div style={{ display: "flex", alignItems: "flex-start", gap: "1rem", marginBottom: "1rem" }}>
-            <div style={{
-              width: "48px", height: "48px", borderRadius: "10px",
-              background: "#0d1117", border: "1px solid var(--border)",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              flexShrink: 0, overflow: "hidden", padding: "6px",
-              transition: "border-color 0.2s",
-              borderColor: hovered ? "var(--border-2)" : "var(--border)",
-            }}>
+            <motion.div
+              animate={{ scale: hovered ? 1.08 : 1 }}
+              transition={{ type: "spring", stiffness: 400, damping: 20 }}
+              style={{
+                width: "48px", height: "48px", borderRadius: "10px",
+                background: "#0d1117", border: `1px solid ${hovered ? project.accent + "55" : "var(--border)"}`,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                flexShrink: 0, overflow: "hidden", padding: "6px",
+                transition: "border-color 0.2s",
+                boxShadow: hovered ? `0 0 16px ${project.accent}30` : "none",
+              }}
+            >
               <Image
                 src={project.logo}
                 alt={project.name}
@@ -85,7 +141,7 @@ export default function ProjectCard({
                 height={36}
                 style={{ objectFit: "contain" }}
               />
-            </div>
+            </motion.div>
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{
                 fontSize: "0.68rem", letterSpacing: "0.1em", textTransform: "uppercase",
@@ -147,22 +203,22 @@ export default function ProjectCard({
           <div style={{
             display: "flex",
             alignItems: "center",
-            gap: "0.35rem",
+            gap: hovered ? "0.55rem" : "0.35rem",
             fontSize: "0.75rem",
             color: hovered ? project.accent : "var(--text-3)",
             fontWeight: 600,
             transition: "color 0.2s, gap 0.2s",
           }}>
             {lang === "fr" ? "Voir le projet" : "View project"}
-            <span style={{
-              transform: hovered ? "translateX(4px)" : "translateX(0)",
-              transition: "transform 0.2s",
-              display: "inline-block",
-            }}>
+            <motion.span
+              animate={{ x: hovered ? 4 : 0 }}
+              transition={{ type: "spring", stiffness: 400, damping: 20 }}
+              style={{ display: "inline-block" }}
+            >
               →
-            </span>
+            </motion.span>
           </div>
-        </div>
+        </motion.div>
       </Link>
     </motion.div>
   );

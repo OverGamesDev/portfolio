@@ -3,9 +3,12 @@
 import { useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import Navbar from "@/components/ui/Navbar";
 import { useLang } from "@/lib/useLang";
 import { skillGroups, levelLabel, type SkillLevel } from "@/lib/skills";
+
+const SkillsBackground = dynamic(() => import("@/components/three/SkillsBackground"), { ssr: false });
 
 function LevelDots({ level }: { level: SkillLevel }) {
   const map: Record<SkillLevel, number> = { expert: 3, advanced: 2, intermediate: 1 };
@@ -168,8 +171,9 @@ export default function SkillsPage() {
   return (
     <>
       <Navbar />
-      <main style={{ minHeight: "100vh", paddingTop: "100px", paddingBottom: "100px" }}>
-        <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "0 2rem" }}>
+      <main style={{ minHeight: "100vh", paddingTop: "100px", paddingBottom: "100px", position: "relative" }}>
+        <SkillsBackground />
+        <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "0 2rem", position: "relative", zIndex: 1 }}>
 
           {/* Header */}
           <motion.div

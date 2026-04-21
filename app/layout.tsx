@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import LangProvider from "@/components/ui/LangProvider";
+import CursorGlow from "@/components/ui/CursorGlow";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -25,6 +26,7 @@ export default function RootLayout({
     <html lang="fr" className={inter.variable}>
       <body>
         <div className="noise-overlay" aria-hidden="true" />
+        <CursorGlow />
         <LangProvider>
           {children}
         </LangProvider>

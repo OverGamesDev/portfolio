@@ -165,6 +165,20 @@ export const skillGroups: SkillGroup[] = [
       { name: "Linear / Notion", level: "advanced" },
     ],
   },
+  {
+    id: "video",
+    title: { fr: "Vidéo & Motion", en: "Video & Motion" },
+    color: "#f59e0b",
+    preview: 3,
+    skills: [
+      { name: "Remotion", level: "advanced", note: { fr: "Vidéo programmatique en React", en: "Programmatic video in React" } },
+      { name: "After Effects", level: "intermediate" },
+      { name: "Video Editing", level: "intermediate" },
+      { name: "Three.js / R3F (animations 3D)", level: "advanced" },
+      { name: "Framer Motion", level: "advanced" },
+      { name: "CSS Animations", level: "expert" },
+    ],
+  },
 ];
 
 export const levelLabel = {
