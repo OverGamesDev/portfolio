@@ -18,7 +18,7 @@ export const translations = {
       cta_skills: "Compétences",
       stats: [
         { value: "7", label: "Projets livrés" },
-        { value: "86", label: "Skills" },
+        { value: "92", label: "Skills" },
         { value: "5+", label: "ans dans la crypto" },
       ],
     },
@@ -46,7 +46,7 @@ export const translations = {
       telegram: "Telegram",
     },
     footer: {
-      tagline: "7 projets · 86 skills · dans la crypto depuis 2020",
+      tagline: "7 projets · 92 skills · dans la crypto depuis 2020",
       available: "Open for work",
     },
     lang_switch: "EN",
@@ -68,7 +68,7 @@ export const translations = {
       cta_skills: "Skills",
       stats: [
         { value: "7", label: "Projects shipped" },
-        { value: "86", label: "Skills" },
+        { value: "92", label: "Skills" },
         { value: "5+", label: "years in crypto" },
       ],
     },
@@ -96,7 +96,7 @@ export const translations = {
       telegram: "Telegram",
     },
     footer: {
-      tagline: "7 projects · 86 skills · in crypto since 2020",
+      tagline: "7 projects · 92 skills · in crypto since 2020",
       available: "Open for work",
     },
     lang_switch: "FR",
