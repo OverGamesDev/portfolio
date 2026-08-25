@@ -1,19 +1,19 @@
 import Navbar from "@/components/ui/Navbar";
-import Hero from "@/components/sections/Hero";
-import Projects from "@/components/sections/Projects";
-import Skills from "@/components/sections/Skills";
-import Contact from "@/components/sections/Contact";
-import Footer from "@/components/sections/Footer";
+import BlockRail from "@/components/chain/BlockRail";
+import Genesis from "@/components/sections/Genesis";
+import Protocols from "@/components/sections/Protocols";
+import Mempool from "@/components/sections/Mempool";
+import Finality from "@/components/sections/Finality";
 
 export default function Home() {
   return (
     <main>
       <Navbar />
-      <Hero />
-      <Projects />
-      <Skills />
-      <Contact />
-      <Footer />
+      <BlockRail />
+      <Genesis />
+      <Protocols />
+      <Mempool />
+      <Finality />
     </main>
   );
 }

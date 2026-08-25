@@ -1,19 +1,31 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Unbounded, Instrument_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import LangProvider from "@/components/ui/LangProvider";
-import CursorGlow from "@/components/ui/CursorGlow";
 
-const inter = Inter({
+const unbounded = Unbounded({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-unbounded",
+  display: "swap",
+});
+
+const instrument = Instrument_Sans({
+  subsets: ["latin"],
+  variable: "--font-instrument",
+  display: "swap",
+});
+
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-plex-mono",
   display: "swap",
 });
 
 export const metadata: Metadata = {
   title: "Joffrey | Blockchain & DeFi Developer",
   description:
-    "Blockchain & DeFi developer. NFT Marketplace, Perpetuals, Lending protocols, AI smart contract generation. 7 projects shipped on Alephium & MegaETH.",
+    "Blockchain & DeFi developer. NFT Marketplace, Perpetuals, Lending protocols, AI smart contract generation. 7 protocols shipped on Alephium & MegaETH.",
   keywords: ["blockchain", "DeFi", "Solidity", "Ralph", "Alephium", "MegaETH", "web3", "Joffrey"],
 };
 
@@ -23,13 +35,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className={inter.variable}>
+    <html lang="fr" className={`${unbounded.variable} ${instrument.variable} ${plexMono.variable}`}>
       <body>
-        <div className="noise-overlay" aria-hidden="true" />
-        <CursorGlow />
-        <LangProvider>
-          {children}
-        </LangProvider>
+        <div className="grain" aria-hidden="true" />
+        <LangProvider>{children}</LangProvider>
       </body>
     </html>
   );

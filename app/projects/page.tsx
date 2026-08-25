@@ -1,14 +1,11 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Link from "next/link";
-import dynamic from "next/dynamic";
+import Image from "next/image";
+import Navbar from "@/components/ui/Navbar";
+import BlockRail from "@/components/chain/BlockRail";
 import { projects } from "@/lib/projects";
 import { useLang } from "@/lib/useLang";
-import ProjectCard from "@/components/ui/ProjectCard";
-import Navbar from "@/components/ui/Navbar";
-
-const HexBackground = dynamic(() => import("@/components/three/HexBackground"), { ssr: false });
 
 export default function ProjectsPage() {
   const { t, lang } = useLang();
@@ -16,47 +13,42 @@ export default function ProjectsPage() {
   return (
     <>
       <Navbar />
-      <main className="projects-page-main" style={{ minHeight: "100vh", paddingTop: "100px", paddingBottom: "80px", position: "relative" }}>
-        <HexBackground />
-        <div className="projects-page-inner" style={{ maxWidth: "1100px", margin: "0 auto", padding: "0 2rem", position: "relative", zIndex: 1 }}>
-          {/* Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            style={{ marginBottom: "3.5rem" }}
-          >
-            <Link
-              href="/"
-              style={{
-                display: "inline-flex", alignItems: "center", gap: "0.4rem",
-                fontSize: "0.78rem", color: "var(--text-2)", textDecoration: "none",
-                marginBottom: "2rem", transition: "color 0.2s",
-              }}
-              onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "var(--text)")}
-              onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "var(--text-2)")}
-            >
-              {t.projects.back}
-            </Link>
-            <p style={{ fontSize: "0.72rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--text-3)", marginBottom: "0.5rem", fontWeight: 600 }}>
-              {t.projects.section_label}
-            </p>
-            <h1 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 800, letterSpacing: "-0.03em", color: "var(--text)" }}>
-              {t.projects.all_title}
-            </h1>
-          </motion.div>
-
-          {/* Grid */}
-          <div className="projects-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: "1rem" }}>
-            {projects.map((project, i) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                index={i}
-                lang={lang}
-              />
-            ))}
+      <BlockRail initial={1} />
+      <main className="subpage">
+        <div className="subpage-head">
+          <Link href="/" className="subpage-back">← {t.projects.back}</Link>
+          <div>
+            <span className="block-tag">{t.protocols.block}</span>
           </div>
+          <h1 className="subpage-title display">{t.projects.all_title}</h1>
+          <p className="subpage-sub">{t.projects.all_sub}</p>
+        </div>
+
+        <div className="pj-grid">
+          {projects.map((p, i) => (
+            <Link
+              href={`/projects/${p.id}`}
+              key={p.id}
+              className="pj-card"
+              style={{ "--pj-accent": p.accent, animationDelay: `${i * 0.07}s` } as React.CSSProperties}
+            >
+              <div className="pj-card-top">
+                <span className="pj-index">BLOCK_{String(i + 1).padStart(2, "0")}</span>
+                <Image src={p.logo} alt="" width={52} height={52} className="pj-logo" />
+              </div>
+              <div>
+                <h2 className="pj-name">{p.name}</h2>
+                <div className="pj-type">{p.type[lang]}</div>
+              </div>
+              <p className="pj-desc">{p.description[lang]}</p>
+              <div className="pj-foot">
+                <span style={{ color: p.chainColor }}>{p.chain}</span>
+                <span style={{ color: p.closed ? "var(--ember)" : "var(--ok)" }}>
+                  {p.closed ? t.protocols.closed : t.protocols.live}
+                </span>
+              </div>
+            </Link>
+          ))}
         </div>
       </main>
     </>
