@@ -25,8 +25,8 @@ const plexMono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   title: "Joffrey | Blockchain & DeFi Developer",
   description:
-    "Blockchain & DeFi developer. NFT Marketplace, Perpetuals, Lending protocols, AI smart contract generation. 7 protocols shipped on Alephium & MegaETH.",
-  keywords: ["blockchain", "DeFi", "Solidity", "Ralph", "Alephium", "MegaETH", "web3", "Joffrey"],
+    "Blockchain & DeFi developer. Ethereum Layer 2, NFT Marketplace, Perpetuals, Lending protocols, AI smart contract generation. 8 protocols shipped on Alephium, MegaETH & Pickle Chain.",
+  keywords: ["blockchain", "DeFi", "Solidity", "Ralph", "Alephium", "MegaETH", "Pickle Chain", "Layer 2", "Rust", "web3", "Joffrey"],
 };
 
 export default function RootLayout({

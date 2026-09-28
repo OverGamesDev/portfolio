@@ -50,7 +50,7 @@ export default function Mempool() {
         tl.fromTo(row, { x: dir * -220 }, { x: dir * 220, ease: "none", duration: 0.99 }, 0.01);
       });
 
-      // tx counter confirms 0 → 92 while pinned
+      // tx counter confirms 0 → total while pinned
       const state = { v: 0 };
       tl.to(state, {
         v: total,

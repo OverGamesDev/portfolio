@@ -20,6 +20,48 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    id: "picklechain",
+    name: "Pickle Chain",
+    type: { fr: "Layer 2 Ethereum", en: "Ethereum Layer 2" },
+    chain: "Pickle Chain",
+    chainColor: "#8ee03c",
+    logo: "/logos/picklechain.png",
+    site: "https://picklechain.xyz",
+    accent: "#00e5a0",
+    featured: true,
+    tags: ["Layer 2", "Rust", "Sequencer", "Solidity"],
+    tagColors: { "Layer 2": "green", Rust: "accent", Sequencer: "green", Solidity: "neutral" },
+    description: {
+      fr: "Layer 2 Ethereum complète, du sequencer Rust aux apps. Mini-blocks toutes les 10 ms, gas en ETH, bridge L1↔L2, oracle de prix natif, DEX, name service, arcade on-chain et plateforme de quêtes.",
+      en: "A full Ethereum Layer 2, from the Rust sequencer to the apps. Mini-blocks every 10 ms, ETH gas, L1↔L2 bridge, native price oracle, DEX, name service, on-chain arcade and quest platform.",
+    },
+    overview: {
+      fr: "Pickle Chain est une L2 compatible Ethereum inspirée de MegaETH, construite de zéro. Le sequencer est un nœud Rust sur revm qui exécute chaque transaction immédiatement, diffuse des mini-blocks toutes les ~10 ms (préconfirmation) et scelle un bloc EVM standard toutes les ~250 ms. Les batchs sont publiés sur une couche de data availability puis ancrés sur L1 ; un réplica peut reconstruire l'état canonique à partir de L1 + DA. Le gas se paie en ETH, Pickle (BX) sert au staking et au partage des frais. Autour de la chaîne, tout l'écosystème first-party : faucet, bridge ETH, explorer avec indexer, toolkit (NFT, multisend, locks, vesting), Pickle Name Service, le DEX Pepper (AMM + liquidité concentrée, launchpad de tokens, staking), un oracle natif publié par le sequencer à chaque bloc, un wallet smart account (Safe + passkeys), une arcade de jeux on-chain et une plateforme de quêtes avec anti-bot.",
+      en: "Pickle Chain is an Ethereum-compatible L2 inspired by MegaETH, built from scratch. The sequencer is a Rust node on revm that executes every transaction immediately, streams mini-blocks every ~10 ms (preconfirmation) and seals a standard EVM block every ~250 ms. Batches are posted to a data availability layer and anchored on L1; a replica can rebuild canonical state from L1 + DA. Gas is paid in ETH, while Pickle (BX) is used for staking and fee share. Around the chain sits the whole first-party ecosystem: faucet, ETH bridge, explorer with its own indexer, toolkit (NFTs, multisend, locks, vesting), Pickle Name Service, the Pepper DEX (AMM + concentrated liquidity, token launchpad, staking), a native oracle the sequencer publishes every block, a smart account wallet (Safe + passkeys), an on-chain game arcade and a quest platform with anti-bot protection.",
+    },
+    highlights: {
+      fr: [
+        "Sequencer Rust sur revm : mini-blocks 10 ms, blocs EVM 250 ms",
+        "Batchs vers la DA + ancrage L1, réplica qui dérive l'état depuis L1",
+        "Bridge ETH L1↔L2 avec retraits vérifiés sur receipts finalisés",
+        "Oracle natif (crypto, actions, FX, matières premières) publié à chaque bloc, compatible Chainlink",
+        "DEX Pepper : AMM v2 + liquidité concentrée, launchpad et staking",
+        "Wallet smart account (Safe + passkeys), name service, explorer et toolkit",
+        "Arcade de 8 jeux on-chain et plateforme de quêtes avec Turnstile",
+      ],
+      en: [
+        "Rust sequencer on revm: 10 ms mini-blocks, 250 ms EVM blocks",
+        "Batches to DA + L1 anchoring, replica deriving state from L1",
+        "L1↔L2 ETH bridge with withdrawals checked against finalized receipts",
+        "Native oracle (crypto, equities, FX, commodities) published every block, Chainlink-compatible",
+        "Pepper DEX: v2 AMM + concentrated liquidity, launchpad and staking",
+        "Smart account wallet (Safe + passkeys), name service, explorer and toolkit",
+        "Arcade of 8 on-chain games and a quest platform with Turnstile",
+      ],
+    },
+    techStack: ["Rust", "revm", "Solidity", "Foundry", "Next.js", "React", "Viem", "Privy", "Three.js", "Python", "PostgreSQL", "Docker"],
+  },
+  {
     id: "alphaga",
     name: "Alphaga",
     type: { fr: "NFT Marketplace", en: "NFT Marketplace" },
